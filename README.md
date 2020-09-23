@@ -12,5 +12,5 @@ Searches in YAML files for properties that matches a regex and prints them.
 
 ## Examples
 
-- finds Ansible variables matching nginx: yg nginx
+- finds Ansible variables matching nginx: yg nginx group\_vars/\* host\_vars/\*
 
