@@ -13,12 +13,19 @@ signal(SIGPIPE, SIG_DFL)
 
 def grep(pattern, file):
     with file.open() as f:
-        data = yaml.safe_load(f)
-    hits = {k: v for k, v in data.items() if re.search(pattern, k)}
-    if hits:
-        print('==>', file, '<==')
-        yaml.dump(hits, sys.stdout, default_flow_style=False)
-        print()
+        try:
+            data = yaml.safe_load(f)
+            try:
+                hits = {k: v for k, v in data.items() if re.search(pattern, k)}
+                if hits:
+                    print('==>', file, '<==')
+                    yaml.dump(hits, sys.stdout, default_flow_style=False)
+                    print()
+            except AttributeError:
+                pass
+        except yaml.scanner.ScannerError:
+            print('Parse error:', file, file=sys.stderr)
+
 
 
 def main():

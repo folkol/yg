@@ -6,7 +6,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='folkol.yg',
-    version='0.0.10',
+    version='0.0.15',
     description='a unix filter for "greping" in YAML files',
     long_description=long_description,
     long_description_content_type='text/markdown',
