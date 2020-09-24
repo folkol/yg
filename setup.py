@@ -1,12 +1,13 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 import pathlib
+from folkol.yg import VERSION
 
 here = pathlib.Path(__file__).parent.resolve()
 long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='folkol.yg',
-    version='0.0.15',
+    version=VERSION,
     description='a unix filter for "greping" in YAML files',
     long_description=long_description,
     long_description_content_type='text/markdown',
