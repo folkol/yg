@@ -13,6 +13,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/folkol/yg',
     author='folkol',
+    author_email='mattias4@kth.se',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
