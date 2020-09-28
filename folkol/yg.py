@@ -12,7 +12,14 @@ from signal import signal, SIGPIPE, SIG_DFL
 signal(SIGPIPE, SIG_DFL)
 
 debug = os.environ.get('DEBUG')
-VERSION = '0.0.16'
+VERSION = '0.0.17'
+
+
+def search(pattern, k):
+    try:
+        return pattern.search(k)
+    except TypeError:
+        pass
 
 
 def grep(pattern, file):
@@ -21,7 +28,7 @@ def grep(pattern, file):
             data = yaml.safe_load_all(f)
             for doc in data:
                 if isinstance(doc, dict):
-                    hits = {k: v for k, v in doc.items() if re.search(pattern, k)}
+                    hits = {k: v for k, v in doc.items() if search(pattern, k)}
                     if hits:
                         print('==>', file, '<==')
                         yaml.dump(hits, sys.stdout, default_flow_style=False)
@@ -32,7 +39,8 @@ def grep(pattern, file):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='searches and prints YAML (top-level) properties matching regex')
+    parser = argparse.ArgumentParser(
+            description='searches and prints YAML (top-level) properties matching regex')
     parser.add_argument(
         'pattern',
         action='store',
@@ -41,7 +49,7 @@ def main():
     parser.add_argument(
         'files',
         nargs='*',
-        help='Files to search, defaults to all files under the current directory (recursively).',
+        help='Files/directories to search, defaults to "."',
         default=[pathlib.Path('.')],
         type=pathlib.Path,
     )
