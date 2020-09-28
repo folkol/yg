@@ -1,3 +1,5 @@
 # TODO
 
 - stdin support
+- ignore .gitignore by default
+- speed up search (parallel scanning?)
