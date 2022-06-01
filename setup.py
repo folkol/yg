@@ -23,7 +23,7 @@ setup(
     ],
     keywords='shell, unix filter',
     packages=["folkol"],
-    install_requires=['pyyaml'],
+    install_requires=['pyyaml', 'GitPython'],
     python_requires='>=3.6, <4',
     entry_points={
         'console_scripts': [

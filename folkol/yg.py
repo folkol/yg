@@ -6,6 +6,7 @@ import re
 import sys
 
 import yaml
+import git
 
 from signal import signal, SIGPIPE, SIG_DFL
 
@@ -49,8 +50,10 @@ def main():
     parser.add_argument(
         'files',
         nargs='*',
-        help='Files/directories to search, defaults to "."',
-        default=[pathlib.Path('.')],
+        help=(
+            'Files/directories to search, defaults to git ls-files '
+            'and falls back to all files under current directory'
+        ),
         type=pathlib.Path,
     )
     parser.add_argument(
@@ -63,12 +66,23 @@ def main():
 
     try:
         pattern = re.compile(args.pattern)
+
+        print(args.files)
+        if not args.files:
+            print('Trying git')
+            args.files = (pathlib.Path(line) for line in git.cmd.Git('/Users/folkol/code/soda/ansible').ls_files().split('\n'))
+            print('Tried git')
+
+
         for root in args.files or ['.']:
+            print('root', root)
             if root.is_dir():
                 for file in pathlib.Path(root).rglob('*'):
                     if file.is_file():
+                        print('Doing', file)
                         grep(pattern, file)
             elif root.is_file():
+                print('Doing', root)
                 grep(pattern, root)
             else:
                 if debug:
